@@ -1,7 +1,6 @@
 import Items from './items.js';
 import './style.css';
 
-
 const scores = [
   {
     player: 'name',
