@@ -15,11 +15,14 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
-  
 }
 
 .main {
   margin: 3%;
+}
+
+h3 {
+  font-size: 2rem;
 }
 
 .item_container {
@@ -51,6 +54,7 @@ button {
   justify-content: space-between;
   margin-bottom: 20px;
 }
+
 .second_container h3 {
   margin-bottom: 30px;
 }
@@ -88,8 +92,4 @@ form input {
 form button {
   width: 65%;
   margin-left: 35%;
-}
-
-h3 {
-  font-size: 2rem;
 }
