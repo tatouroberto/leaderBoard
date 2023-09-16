@@ -2,7 +2,6 @@ import './style.css';
 import Scores from './items.js';
 import getURL from './targetUrl.js';
 
-
 const form = document.querySelector('.score_form');
 const playerName = document.getElementById('name');
 const playerScore = document.getElementById('score');
@@ -30,7 +29,7 @@ const setNewScore = async (newScore) => {
 const addScore = async (newScore) => {
   const scoreContainer = document.createElement('li');
   scoreContainer.innerText = `${newScore.user}: ${newScore.score}`;
- 
+
   scoreListContainer.appendChild(scoreContainer);
 };
 
