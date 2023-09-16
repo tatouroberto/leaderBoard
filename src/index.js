@@ -1,52 +1,63 @@
-import Items from './items.js';
 import './style.css';
+import Scores from './items.js';
+import getURL from './targetUrl.js';
 
-const scores = [
-  {
-    player: 'name',
-    score: 3,
-    index: 0,
-  },
-  {
-    player: 'name',
-    score: 5,
-    index: 1,
-  },
-  {
-    player: 'name',
-    score: 9,
-    index: 2,
-  },
-  {
-    player: 'name',
-    score: 10,
-    index: 3,
-  },
-  {
-    player: 'name',
-    score: 2,
-    index: 4,
-  },
-  {
-    player: 'name',
-    score: 8,
-    index: 5,
-  },
-  {
-    player: 'name',
-    score: 6,
-    index: 6,
-  },
-];
-const scoreListContainer = document.querySelector('.scores_list_container');
 
-const displayScores = () => {
-  scores.forEach((item) => {
-    const newScore = new Items(item.player, item.score, item.index);
-    const scoreContainer = document.createElement('li');
-    scoreContainer.innerText = `${newScore.player}: ${newScore.score}`;
-    scoreListContainer.appendChild(scoreContainer);
-    return newScore;
+const form = document.querySelector('.score_form');
+const playerName = document.getElementById('name');
+const playerScore = document.getElementById('score');
+const refreshScores = document.getElementById('refresh');
+const scoreListContainer = document.querySelector(
+  '.scores_list_container',
+);
+
+const setNewScore = async (newScore) => {
+  try {
+    const result = await fetch(await getURL(), {
+      method: 'POST',
+      body: JSON.stringify(newScore),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    });
+    const newScoreResult = await result.json();
+    return newScoreResult;
+  } catch (error) {
+    return error;
+  }
+};
+
+const addScore = async (newScore) => {
+  const scoreContainer = document.createElement('li');
+  scoreContainer.innerText = `${newScore.user}: ${newScore.score}`;
+  scoreContainer.classList.add('score_item');
+  scoreListContainer.appendChild(scoreContainer);
+};
+
+const addScores = async (savedScores) => {
+  savedScores.result.forEach((score) => {
+    addScore(score);
   });
 };
-displayScores();
+
+const getScores = async () => {
+  const resultSaved = await fetch(await getURL());
+  const savedScores = await resultSaved.json();
+  addScores(savedScores);
+};
+getScores();
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const name = playerName.value;
+  const score = playerScore.value;
+  const newScore = new Scores(name, score);
+  setNewScore(newScore);
+  addScore(newScore);
+  form.reset();
+});
+
+refreshScores.addEventListener('click', () => {
+  scoreListContainer.innerHTML = '';
+  getScores();
+});
