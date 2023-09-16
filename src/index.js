@@ -29,6 +29,7 @@ const setNewScore = async (newScore) => {
 const addScore = async (newScore) => {
   const scoreContainer = document.createElement('li');
   scoreContainer.innerText = `${newScore.user}: ${newScore.score}`;
+  scoreContainer.classList.add('scored_items');
 
   scoreListContainer.appendChild(scoreContainer);
 };
